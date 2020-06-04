@@ -24,7 +24,7 @@ module.exports = function fileSearch(fileToSearch, filesObj) {
 	const obj = JSON.parse(filesObj)
 	const filesObjList = depthFirstFileSearch(fileToSearch, obj)
 	filesObjList.sort((a, b) =>
-		a.depth == b.depth ? a.path > b.path : a.depth > b.depth
+		a.depth == b.depth ? a.path.localeCompare(b.path) : a.depth - b.depth
 	)
 	return filesObjList.map((fileObj) => fileObj.path)
 }
