@@ -1,3 +1,9 @@
+/* Depth First Search Algorithm :
+ * 	 Look through the directory,
+ * 	 search the file in the current folder,
+ *	 then recursively search each sub folder.
+ * Return : a list of file path and file depth
+ */
 function depthFirstFileSearch(fileToSearch, curObj, curPath = '', depth = 0) {
 	var fileList = []
 	for (const key in curObj) {
@@ -20,11 +26,17 @@ function depthFirstFileSearch(fileToSearch, curObj, curPath = '', depth = 0) {
 	return fileList
 }
 
+/*
+ * Convert json to object
+ * Search all the file path
+ * Sort by depth and alphabetical order
+ * Return : a list of path
+ */
 module.exports = function fileSearch(fileToSearch, filesObj) {
 	const obj = JSON.parse(filesObj)
-	const filesObjList = depthFirstFileSearch(fileToSearch, obj)
-	filesObjList.sort((a, b) =>
+	const filePathList = depthFirstFileSearch(fileToSearch, obj)
+	filePathList.sort((a, b) =>
 		a.depth == b.depth ? a.path.localeCompare(b.path) : a.depth - b.depth
 	)
-	return filesObjList.map((fileObj) => fileObj.path)
+	return filePathList.map((fileObj) => fileObj.path)
 }
