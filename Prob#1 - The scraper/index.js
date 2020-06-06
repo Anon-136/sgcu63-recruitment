@@ -1,6 +1,59 @@
 const puppeteer = require('puppeteer')
 const fs = require('fs')
 
+const createHtml = (data) => `<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1, shrink-to-fit=no"
+		/>
+		<link
+			rel="stylesheet"
+			href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+			integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+			crossorigin="anonymous"
+		/>
+		<link href='https://fonts.googleapis.com/css?family=Kanit:400,300&subset=thai,latin' rel='stylesheet' type='text/css'>
+		<style>* {font-family: Kanit;}</style>
+		<title>รับน้องก้าวไหม</title>
+	</head>
+	<body>
+		<div class="container d-flex flex-column align-items-center">
+			<h1 class="py-5">บ้านรับน้องปี 2019</h1>
+			<div class="table-responsive col-lg-9">
+				<table class="table table-bordered">
+					<thead class="thead-light">
+						<tr>
+							<th scope="col">ชื่อบ้าน</th>
+							<th scope="col">สโลแกน</th>
+						</tr>
+					</thead>${tbody(data)}<tbody>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<script
+			src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+			integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+			crossorigin="anonymous"
+		></script>
+		<script
+			src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+			integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+			crossorigin="anonymous"
+		></script>
+	</body>
+</html>
+`
+
+const tbody = (data) => `
+${Array.from(data)
+	.map(({ name, slogan }) => `<tr><td>${name}</td><td>${slogan}</td></tr>`)
+	.join('')}
+`
+
 const scrapeData = async () => {
 	const browser = await puppeteer.launch()
 	const page = await browser.newPage()
@@ -37,40 +90,5 @@ const scrapeData = async () => {
 		if (err) console.log('error', err)
 	})
 }
-
-const createHtml = (data) => `
-<!doctype html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-        <title>รับน้องก้าวไหม</title>
-    </head>
-    <body>
-		<div class="container">
-			<div class="table-responsive">
-				<table class="table table-bordered">
-					<thead class="thead-light">
-						<tr>
-							<th scope='col'>ชื่อบ้าน</th>
-							<th scope='col'>สโลแกน</th>
-						</tr>
-					</thead>
-					<tbody>${tbody(data)}</tbody>
-				</table>
-			</div>
-		</div>
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-    </body>
-</html>
-`
-
-const tbody = (data) => `
-${Array.from(data)
-	.map(({ name, slogan }) => `<tr><td>${name}</td><td>${slogan}</td></tr>`)
-	.join('')}
-`
 
 scrapeData()
