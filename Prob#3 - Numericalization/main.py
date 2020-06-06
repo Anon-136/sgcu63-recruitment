@@ -1,6 +1,8 @@
+# read inputs
 inp = input().strip().split()
 n, m1, m2 = inp[0], int(inp[1]), int(inp[2])
 
+# read custom display from display.txt
 display = {}
 with open('display.txt') as file :
     for num in range(10) :
@@ -12,7 +14,7 @@ with open('display.txt') as file :
 def repeat_print(str, n) :
     print(str * n, end = '')
 
-# loop each number, reapeatly print each column by m2 times
+# reapeatly print each column m2 times for each number
 def print_row(row) :
     for num in [int(c) for c in n] :
         for col in range(5) :
@@ -20,7 +22,7 @@ def print_row(row) :
         repeat_print(' ', m2)
     print(end = '\n')
 
-# loop each row for m1 times
+# print each row m1 times
 for row in range(5) :
     for i in range(m1) :
         print_row(row)
