@@ -26,7 +26,7 @@ const scrapeData = async () => {
 		await page.goto(`${url}${link}`)
 		await page.waitForSelector('h1', { visible: true })
 		const name = await page.$eval('h1', (node) => node.textContent)
-		const slogan = await page.$eval('h3', (node) => node.textContent)
+		const slogan = await page.$eval('h3', (node) => node.innerHTML)
 		data.push({ name, slogan })
 	}
 	await browser.close()
