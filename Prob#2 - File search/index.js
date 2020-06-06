@@ -7,7 +7,7 @@ function depthFirstFileSearch(fileToSearch, curObj, curPath = '', depth = 0) {
 					fileList.push({ path: `${curPath}/${fileName}`, depth })
 				}
 			}
-		} else {
+		} else if (key[0] != '_') {
 			const result = depthFirstFileSearch(
 				fileToSearch,
 				curObj[key],
