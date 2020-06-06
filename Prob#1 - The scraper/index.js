@@ -60,7 +60,7 @@ const scrapeData = async () => {
 	const url = 'https://rubnongkaomai.com'
 
 	await page.goto(`${url}/baan`)
-	await page.waitForSelector('.ant-select', { visible: true })
+	await page.waitForSelector('.ant-select')
 	await page.click('.ant-select')
 	await page.evaluate(() => {
 		const houseTypes = document.querySelectorAll(
@@ -77,7 +77,7 @@ const scrapeData = async () => {
 	const data = []
 	for (const link of links) {
 		await page.goto(`${url}${link}`)
-		await page.waitForSelector('h1', { visible: true })
+		await page.waitForSelector('h1')
 		const name = await page.$eval('h1', (node) => node.textContent)
 		const slogan = await page.$eval('h3', (node) => node.innerHTML)
 		data.push({ name, slogan })
